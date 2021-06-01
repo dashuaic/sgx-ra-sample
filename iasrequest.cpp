@@ -37,6 +37,7 @@ in the License.
 #ifdef AGENT_WGET
 # include "agent_wget.h"
 #endif
+# include "agent_curl.h"
 #include "iasrequest.h"
 #include "logfile.h"
 #include "httpparser/response.h"
@@ -230,7 +231,7 @@ Agent *IAS_Connection::new_agent()
 #ifdef AGENT_WGET
 		if ( c_agent_name == AgentWget::name ) {
 			try {
-				newagent= (Agent *) new AgentWget(this);
+				newagent= (Agent *) new AgentCurl(this);
 			}
 			catch (...) {
 				if ( newagent != NULL ) delete newagent;
@@ -258,7 +259,7 @@ Agent *IAS_Connection::new_agent()
 		if ( newagent == NULL ) {
 			if ( debug ) eprintf("+++ Trying agent_wget\n");
 			try {
-				newagent= (Agent *) new AgentWget(this);
+				newagent= (Agent *) new AgentCurl(this);
 			}
 			catch (...) { 
 				if ( newagent != NULL ) delete newagent;
@@ -350,7 +351,7 @@ ias_error_t IAS_Request::report(map<string,string> &payload, string &content,
 	map<string,string>::iterator imap;
 	string url= r_conn->base_url();
 	string certchain;
-	string body= "{\n";
+	string body= "{";
 	size_t cstart, cend, count, i;
 	vector<X509 *> certvec;
 	X509 **certar;

@@ -163,14 +163,14 @@ int AgentCurl::request(string const &url, string const &postdata,
 		return 0;
 
 	if ( postdata != "" ) {
-		curl_slist *slist= NULL;
+		//curl_slist *slist= NULL;
 
 		// Set our POST specific headers
 		if ( (slist= curl_slist_append(slist, "Content-Type: application/json")) == NULL )
 			return 0;
 
-		if ( (slist= curl_slist_append(slist, "Expect:")) == NULL )
-			return 0;
+		//if ( (slist= curl_slist_append(slist, "Expect:")) == NULL )
+		//	return 0;
 
 		// Set our method to POST and send the length
 		bp= postdata.c_str();
